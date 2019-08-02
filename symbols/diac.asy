@@ -18,8 +18,8 @@ SYMATTR SpiceModel ${subfile}
 SYMATTR Value2 ${subckt.assigned_name}
 SYMATTR Description Trigger Diode (Diac) ${subckt.name}
 PIN 32 0 NONE 0
-PINATTR PinName +
+PINATTR PinName A1
 PINATTR SpiceOrder 1
 PIN 32 64 NONE 0
-PINATTR PinName -
+PINATTR PinName A2
 PINATTR SpiceOrder 2

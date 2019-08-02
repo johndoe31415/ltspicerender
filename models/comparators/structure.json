@@ -1,0 +1,4 @@
+{
+	"symbol":	"comparator",
+	"order":	[ "IN+", "IN-", "VCC", "VEE", "OUT" ]
+}
