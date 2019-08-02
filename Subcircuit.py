@@ -69,7 +69,7 @@ class Subcircuit():
 			raise Exception("Cannot determine number of pins in subcircuit: %s" % (self.filename))
 		match = match.groupdict()
 		self._name = match["name"].strip()
-		self._pins = re.split(r"\s+", match["pins"])
+		self._pins = re.split(r"\s+", match["pins"].strip(" \t\r\n"))
 
 	def render(self, symbol_pin_order = None, subckt_pin_order = None):
 		if (symbol_pin_order is not None) and (subckt_pin_order is not None):
