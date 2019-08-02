@@ -19,18 +19,11 @@
 #
 #	Johannes Bauer <JohannesBauer@gmx.de>
 
-WINE_BASEDIR="${HOME}/.wine/drive_c/"
-
-LTSPICE_SUBDIR="Program Files/LTC/LTspiceXVII/"
-LTSPICE_DIR="${WINE_BASEDIR}${LTSPICE_SUBDIR}"
-OUTPUT_SUBDIR="${LTSPICE_SUBDIR}userlib/"
-OUTPUT_DIR="${LTSPICE_DIR}${OUTPUT_SUBDIR}"
+#LTSPICE_DIR="${HOME}/.wine/drive_c/Program Files/LTC/LTspiceXVII/"
+LTSPICE_DIR="${HOME}/LTspiceXVII/"
+OUTPUT_DIR="${LTSPICE_DIR}lib/"
 if [ ! -d "$LTSPICE_DIR" ]; then
 	echo "Invalid LTSpice directory: ${LTSPICE_DIR}"
 	exit 1
 fi
 ./ltspicerender -v --output="${OUTPUT_DIR}"
-echo
-echo "Include directories in config:"
-echo "    C:\\${OUTPUT_SUBDIR}sym" | sed 's/\//\\/g;'
-echo "    C:\\${OUTPUT_SUBDIR}sub" | sed 's/\//\\/g;'

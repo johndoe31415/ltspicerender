@@ -35,7 +35,7 @@ parser.add_argument("-s", "--symbols", metavar = "dirname", type = str, default 
 parser.add_argument("-m", "--models", metavar = "dirname", type = str, default = "models", help = "Specifies models directory to use. Recursively searched. Defaults to %(default)s.")
 parser.add_argument("-o", "--output", metavar = "dirname", type = str, default = "output", help = "Specifies output directory to render models to. Defaults to %(default)s.")
 parser.add_argument("--subckt-prefix", metavar = "prefix", type = str, default = "ltspicerender_", help = "Prefix the rendered subcircuit files by this string. Defaults to %(default)s.")
-parser.add_argument("--symbol-prefix", metavar = "prefix", type = str, default = "", help = "Prefix the rendered symbol files by this string. Defaults to %(default)s.")
+parser.add_argument("--symbol-prefix", metavar = "prefix", type = str, default = "User/", help = "Prefix the rendered symbol files by this string. Defaults to %(default)s.")
 parser.add_argument("--assign-subckt-names", action = "store_true", default = "By default, names of parts are derived from the model filename. This option instead uses the subcircuit name (in the .SUBCKT directive).")
 parser.add_argument("-v", "--verbose", action = "count", default = 0, help = "Increases verbosity. Can be specified multiple times to increase.")
 args = parser.parse_args(sys.argv[1:])
