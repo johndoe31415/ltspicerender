@@ -1,0 +1,36 @@
+#!/bin/bash
+#	ltspicerender - Process LTSpice Subcicuits to macromodels
+#	Copyright (C) 2013-2019 Johannes Bauer
+#
+#	This file is part of ltspicerender.
+#
+#	ltspicerender is free software; you can redistribute it and/or modify
+#	it under the terms of the GNU General Public License as published by
+#	the Free Software Foundation; this program is ONLY licensed under
+#	version 3 of the License, later versions are explicitly excluded.
+#
+#	ltspicerender is distributed in the hope that it will be useful,
+#	but WITHOUT ANY WARRANTY; without even the implied warranty of
+#	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#	GNU General Public License for more details.
+#
+#	You should have received a copy of the GNU General Public License
+#	along with this program.  If not, see <https://www.gnu.org/licenses/>.
+#
+#	Johannes Bauer <JohannesBauer@gmx.de>
+
+WINE_BASEDIR="${HOME}/.wine/drive_c/"
+
+LTSPICE_SUBDIR="Program Files/LTC/LTspiceXVII/"
+LTSPICE_DIR="${WINE_BASEDIR}${LTSPICE_SUBDIR}"
+OUTPUT_SUBDIR="${LTSPICE_SUBDIR}userlib/"
+OUTPUT_DIR="${LTSPICE_DIR}${OUTPUT_SUBDIR}"
+if [ ! -d "$LTSPICE_DIR" ]; then
+	echo "Invalid LTSpice directory: ${LTSPICE_DIR}"
+	exit 1
+fi
+./ltspicerender -v --output="${OUTPUT_DIR}"
+echo
+echo "Include directories in config:"
+echo "    C:\\${OUTPUT_SUBDIR}sym" | sed 's/\//\\/g;'
+echo "    C:\\${OUTPUT_SUBDIR}sub" | sed 's/\//\\/g;'

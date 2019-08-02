@@ -1,0 +1,4 @@
+.SUBCKT mpdiode1a 2 1
+D1 1 2 mymodel
+.MODEL mymodel D
+.ENDS 

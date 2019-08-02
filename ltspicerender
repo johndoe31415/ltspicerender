@@ -1,0 +1,104 @@
+#!/usr/bin/python3
+#	ltspicerender - Process LTSpice Subcicuits to macromodels
+#	Copyright (C) 2013-2019 Johannes Bauer
+#
+#	This file is part of ltspicerender.
+#
+#	ltspicerender is free software; you can redistribute it and/or modify
+#	it under the terms of the GNU General Public License as published by
+#	the Free Software Foundation; this program is ONLY licensed under
+#	version 3 of the License, later versions are explicitly excluded.
+#
+#	ltspicerender is distributed in the hope that it will be useful,
+#	but WITHOUT ANY WARRANTY; without even the implied warranty of
+#	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#	GNU General Public License for more details.
+#
+#	You should have received a copy of the GNU General Public License
+#	along with this program.  If not, see <https://www.gnu.org/licenses/>.
+#
+#	Johannes Bauer <JohannesBauer@gmx.de>
+
+import os
+import sys
+import json
+import shutil
+import contextlib
+import collections
+from FriendlyArgumentParser import FriendlyArgumentParser
+from Symbols import Symbols
+from Subcircuit import Subcircuit
+from NameAssigner import NameAssigner
+
+parser = FriendlyArgumentParser(description = "LTSpice Macro Model generator.")
+parser.add_argument("-s", "--symbols", metavar = "dirname", type = str, default = "symbols", help = "Specifies symbols directory to use in which the *.asy files are found. Defaults to %(default)s.")
+parser.add_argument("-m", "--models", metavar = "dirname", type = str, default = "models", help = "Specifies models directory to use. Recursively searched. Defaults to %(default)s.")
+parser.add_argument("-o", "--output", metavar = "dirname", type = str, default = "output", help = "Specifies output directory to render models to. Defaults to %(default)s.")
+parser.add_argument("--subckt-prefix", metavar = "prefix", type = str, default = "ltspicerender_", help = "Prefix the rendered subcircuit files by this string. Defaults to %(default)s.")
+parser.add_argument("--symbol-prefix", metavar = "prefix", type = str, default = "", help = "Prefix the rendered symbol files by this string. Defaults to %(default)s.")
+parser.add_argument("--assign-subckt-names", action = "store_true", default = "By default, names of parts are derived from the model filename. This option instead uses the subcircuit name (in the .SUBCKT directive).")
+parser.add_argument("-v", "--verbose", action = "count", default = 0, help = "Increases verbosity. Can be specified multiple times to increase.")
+args = parser.parse_args(sys.argv[1:])
+
+symbols = Symbols.scan_directory(args.symbols)
+if args.verbose >= 2:
+	symbols.dump()
+
+subckt_names = { }
+for (dirname, subdirs, files) in os.walk(args.models):
+	structure_file = dirname + "/structure.json"
+	if not os.path.isfile(structure_file):
+		continue
+
+	with open(structure_file) as f:
+		structure = json.load(f)
+
+	symbol = symbols[structure["symbol"]]
+	subckt_pin_order = structure["order"]
+
+	if args.verbose >= 2:
+		print("Model directory %s: %s" % (dirname, symbol))
+
+	symbol_pins = set(pin.lower() for pin in symbol.pins)
+	directory_pins = set(pin.lower() for pin in subckt_pin_order)
+	if symbol_pins != directory_pins:
+		raise Exception("Cannot render subcircuit directory %s: Symbol \"%s\" requires connections called %s but directory structure file %s has mapping %s" % (dirname, symbol.name, ", ".join(sorted(symbol_pins)), structure_file, ", ".join(sorted(directory_pins))))
+	if symbol.name not in subckt_names:
+		subckt_names[symbol.name] = NameAssigner()
+	name_assigner = subckt_names[symbol.name]
+
+	for filename in sorted(files):
+		if filename.startswith("."):
+			continue
+		if not filename.endswith(".sub"):
+			continue
+		full_filename = dirname + "/" + filename
+		subckt = Subcircuit(full_filename)
+		if args.verbose >= 2:
+			print("    %s: %s" % (full_filename, subckt))
+		if subckt.pincnt != symbol.pincnt:
+			raise Exception("Cannot render subcircuit %s with symbol %s: Symbol requires %d connections (%s) but subcircuit offers %d (%s)" % (full_filename, symbol.filename, symbol.pincnt, ", ".join(symbol.pins), subckt.pincnt, ", ".join(subckt.pins)))
+		if args.assign_subckt_names:
+			assigned_name = name_assigner.assign(subckt.name)
+		else:
+			assigned_name = name_assigner.assign(os.path.basename(subckt.filename)[:-4])
+		subckt.assigned_name = assigned_name
+
+		subfile = "sub/%s%s_%s.sub" % (args.subckt_prefix, symbol.name, subckt.assigned_name)
+		asyfile = "sym/%s%s/%s.asy" % (args.symbol_prefix, symbol.name, subckt.assigned_name)
+		full_subfile = args.output + "/" + subfile
+		full_asyfile = args.output + "/" + asyfile
+		with contextlib.suppress(FileExistsError):
+			os.makedirs(os.path.dirname(full_subfile))
+		with contextlib.suppress(FileExistsError):
+			os.makedirs(os.path.dirname(full_asyfile))
+
+		if args.verbose >= 1:
+			print("%s --> %s" % (subckt.filename, full_subfile))
+			print("%s --> %s" % (symbol.filename, full_asyfile))
+		with open(full_subfile, "w") as f:
+			f.write(subckt.render(symbol_pin_order = symbol.pins, subckt_pin_order = subckt_pin_order))
+		with open(full_asyfile, "w") as f:
+			f.write(symbol.render(subckt = subckt, subfile = subfile))
+
+#print(subckts)

@@ -1,0 +1,4 @@
+{
+	"symbol":	"opamp",
+	"order":	[ "IN+", "IN-", "VCC", "VEE", "OUT" ]
+}
