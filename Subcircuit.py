@@ -75,7 +75,7 @@ class Subcircuit():
 		if (symbol_pin_order is not None) and (subckt_pin_order is not None):
 			symbol_pin_order = [ pin.lower() for pin in symbol_pin_order ]
 			subckt_pin_order = [ pin.lower() for pin in subckt_pin_order ]
-			order_index = [ symbol_pin_order.index(pin) for pin in subckt_pin_order ]
+			order_index = [ subckt_pin_order.index(pin) for pin in symbol_pin_order ]
 		else:
 			order_index = list(len(self.pins))
 

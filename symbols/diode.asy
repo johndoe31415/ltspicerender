@@ -11,8 +11,8 @@ WINDOW 3 24 64 Left 2
 SYMATTR Value ${subckt.assigned_name}
 SYMATTR Prefix X
 SYMATTR SpiceModel ${subfile}
-SYMATTR Value2 ${subckt.assigned_name}
-SYMATTR Description Diode ${subckt.name}
+SYMATTR Value2 ${subckt.name}
+SYMATTR Description Diode ${subckt.assigned_name}
 PIN 16 0 NONE 0
 PINATTR PinName +
 PINATTR SpiceOrder 1

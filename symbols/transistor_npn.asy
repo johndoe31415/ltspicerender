@@ -12,8 +12,8 @@ WINDOW 3 56 68 Left 0
 SYMATTR Value ${subckt.assigned_name}
 SYMATTR Prefix X
 SYMATTR SpiceModel ${subfile}
-SYMATTR Value2 ${subckt.assigned_name}
-SYMATTR Description Bipolar NPN transistor ${subckt.name}
+SYMATTR Value2 ${subckt.name}
+SYMATTR Description Bipolar NPN transistor ${subckt.assigned_name}
 PIN 64 0 NONE 0
 PINATTR PinName C
 PINATTR SpiceOrder 1

@@ -12,8 +12,8 @@ WINDOW 3 0 144 Center 0
 SYMATTR Value ${subckt.assigned_name}
 SYMATTR Prefix X
 SYMATTR SpiceModel ${subfile}
-SYMATTR Value2 ${subckt.assigned_name}
-SYMATTR Description ${subckt.name}
+SYMATTR Value2 ${subckt.name}
+SYMATTR Description ${subckt.assigned_name}
 PIN -112 -96 LEFT 8
 PINATTR PinName 1
 PINATTR SpiceOrder 1

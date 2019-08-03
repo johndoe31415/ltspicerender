@@ -1,4 +1,3 @@
 .SUBCKT mpdiode2a 22 12
-D1 12 22 mymodel
-.MODEL mymodel D
+V1 12 22 10
 .ENDS 

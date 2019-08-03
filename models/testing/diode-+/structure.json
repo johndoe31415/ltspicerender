@@ -1,4 +1,5 @@
 {
 	"symbol":	"diode",
-	"order":	[ "-", "+" ]
+	"order":	[ "-", "+" ],
+	"debug": 	true
 }

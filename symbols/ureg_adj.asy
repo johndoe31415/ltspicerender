@@ -5,8 +5,8 @@ TEXT 1 -46 Center 2 ${subckt.name}
 SYMATTR Value ${subckt.assigned_name}
 SYMATTR Prefix X
 SYMATTR SpiceModel ${subfile}
-SYMATTR Value2 ${subckt.assigned_name}
-SYMATTR Description Adjustable Voltage Regulator ${subckt.name}
+SYMATTR Value2 ${subckt.name}
+SYMATTR Description Adjustable Voltage Regulator ${subckt.assigned_name}
 PIN -48 -16 LEFT 8
 PINATTR PinName In
 PINATTR SpiceOrder 1

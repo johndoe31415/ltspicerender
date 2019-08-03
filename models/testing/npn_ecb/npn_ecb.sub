@@ -1,0 +1,4 @@
+.SUBCKT npnbce E C B
+V1 B E 10
+V2 C E 20
+.ENDS 

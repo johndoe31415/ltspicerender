@@ -18,8 +18,8 @@ WINDOW 3 56 72 Left 0
 SYMATTR Value ${subckt.assigned_name}
 SYMATTR Prefix X
 SYMATTR SpiceModel ${subfile}
-SYMATTR Value2 ${subckt.assigned_name}
-SYMATTR Description P-Channel MOSFET transistor ${subckt.name}
+SYMATTR Value2 ${subckt.name}
+SYMATTR Description P-Channel MOSFET transistor ${subckt.assigned_name}
 PIN 48 0 NONE 0
 PINATTR PinName D
 PINATTR SpiceOrder 1

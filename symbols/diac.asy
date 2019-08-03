@@ -15,8 +15,8 @@ WINDOW 3 48 72 Left 0
 SYMATTR Value ${subckt.assigned_name}
 SYMATTR Prefix X
 SYMATTR SpiceModel ${subfile}
-SYMATTR Value2 ${subckt.assigned_name}
-SYMATTR Description Trigger Diode (Diac) ${subckt.name}
+SYMATTR Value2 ${subckt.name}
+SYMATTR Description Trigger Diode (Diac) ${subckt.assigned_name}
 PIN 32 0 NONE 0
 PINATTR PinName A1
 PINATTR SpiceOrder 1

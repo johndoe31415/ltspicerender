@@ -13,8 +13,8 @@ WINDOW 3 24 64 Left 2
 SYMATTR Value ${subckt.assigned_name}
 SYMATTR Prefix X
 SYMATTR SpiceModel ${subfile}
-SYMATTR Value2 ${subckt.assigned_name}
-SYMATTR Description Shunt Regulator ${subckt.name}
+SYMATTR Value2 ${subckt.name}
+SYMATTR Description Shunt Regulator ${subckt.assigned_name}
 PIN 16 64 NONE 0
 PINATTR PinName -
 PINATTR SpiceOrder 1

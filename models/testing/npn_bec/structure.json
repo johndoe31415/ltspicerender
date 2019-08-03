@@ -1,0 +1,5 @@
+{
+	"symbol":	"transistor_npn",
+	"order":	[ "B", "E", "C" ],
+	"debug":	true
+}

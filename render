@@ -26,4 +26,5 @@ if [ ! -d "$LTSPICE_DIR" ]; then
 	echo "Invalid LTSpice directory: ${LTSPICE_DIR}"
 	exit 1
 fi
-./ltspicerender -v --output="${OUTPUT_DIR}"
+rm -fr "${OUTPUT_DIR}/sym/User"
+./ltspicerender -v --render-debug --output="${OUTPUT_DIR}"

@@ -16,8 +16,8 @@ WINDOW 3 16 32 Left 0
 SYMATTR Value ${subckt.assigned_name}
 SYMATTR Prefix X
 SYMATTR SpiceModel ${subfile}
-SYMATTR Value2 ${subckt.assigned_name}
-SYMATTR Description Op-Amp ${subckt.name}
+SYMATTR Value2 ${subckt.name}
+SYMATTR Description Op-Amp ${subckt.assigned_name}
 PIN -32 16 NONE 0
 PINATTR PinName IN+
 PINATTR SpiceOrder 1
